@@ -14,18 +14,21 @@ class RecipeIngredientAdmin(admin.StackedInline):
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'get_author', 'name', 'text',
+        'id', 'get_author_first_name', 'get_author', 'name', 'text',
         'cooking_time', 'get_tags', 'get_ingredients',
         'pub_date', 'get_favorite_count')
     search_fields = (
         'name', 'cooking_time',
-        'author__email', 'ingredients__name')
-    list_filter = ('pub_date', 'tags',)
+        'author__email', 'ingredients__name', 'tags__name')
+    list_filter = ('pub_date', 'name', 'author__first_name', 'tags')
     inlines = (RecipeIngredientAdmin,)
     empty_value_display = EMPTY_MSG
 
-    @admin.display(
-        description='Электронная почта автора')
+    @admin.display(description='Имя автора')
+    def get_author_first_name(self, obj):
+        return obj.author.first_name
+
+    @admin.display(description='Электронная почта автора')
     def get_author(self, obj):
         return obj.author.email
 
@@ -62,6 +65,7 @@ class IngredientAdmin(admin.ModelAdmin):
         'id', 'name', 'measurement_unit',)
     search_fields = (
         'name', 'measurement_unit',)
+    list_filter = ('name',)
     empty_value_display = EMPTY_MSG
 
 
