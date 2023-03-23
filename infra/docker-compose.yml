@@ -1,6 +1,7 @@
 version: '3.8'
-services:
 
+
+services:
   db:
     image: postgres:14.6-alpine
     restart: always
@@ -10,7 +11,7 @@ services:
       - ./.env
 
   backend:
-    image: themasterid/foodgram_backend:latest
+    image: boroda23/foodgram-backend:latest
     restart: always
     volumes:
       - data_value:/code/data/
@@ -22,7 +23,7 @@ services:
       - ./.env
 
   frontend:
-    image: themasterid/foodgram_frontend:latest
+    image: boroda23/foodgram-frontend:latest
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
