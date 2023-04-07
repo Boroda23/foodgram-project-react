@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.db.models.aggregates import Count, Sum
 from django.db.models.expressions import Exists, OuterRef, Value
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
 from rest_framework import generics, status, viewsets
@@ -13,6 +13,8 @@ from rest_framework.permissions import (SAFE_METHODS, AllowAny,
                                         IsAuthenticated,
                                         IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 
 from api.filters import IngredientFilter, RecipeFilter
 from api.permissions import IsAdminOrReadOnly
@@ -129,6 +131,7 @@ class AuthToken(ObtainAuthToken):
     permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
+        print(request.data)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
@@ -247,6 +250,20 @@ class IngredientsViewSet(
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     filterset_class = IngredientFilter
+
+class IngridientAdd(GenericAPIView):
+    serializer_class = IngredientSerializer
+
+    def post(self, request):
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        name = serializer.validated_data['name']
+        measurement_unit = serializer.validated_data['measurement_unit']
+        ingredient, created = Ingredient.objects.get_or_create(name=name, measurement_unit=measurement_unit)
+        return Response(
+            {'name': ingredient.name, 'measurement_unit': ingredient.measurement_unit, 'created': created},
+            status=status.HTTP_201_CREATED)
 
 
 @api_view(['post'])
