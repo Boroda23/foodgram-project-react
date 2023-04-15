@@ -131,5 +131,3 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'api.pagination.LimitPageNumberPagination',
     'PAGE_SIZE': 6,
 }
-
-CSRF_TRUSTED_ORIGINS = ['http://51.250.68.27']
