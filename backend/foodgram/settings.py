@@ -15,9 +15,6 @@ DEBUG = os.getenv('DEBUG', default='True') == 'True'
 ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS', default='*').split(', ')
 
-
-ALLOWED_HOSTS = [*]
-
 AUTH_USER_MODEL = 'users.User'
 
 INSTALLED_APPS = [
