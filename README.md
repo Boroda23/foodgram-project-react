@@ -1,7 +1,7 @@
 ![foodgram-project-react Workflow Status](https://github.com/Boroda23/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg?branch=master&event=push)
 # Продуктовый помощник Foodgram - дипломный проект Яндекс.Практикум
 
-После запуска проекта, он будет доступен по адресу http://158.160.35.121
+После запуска проекта, он будет доступен по адресу http://158.160.34.141
 Как запустить и посмотреть в действии описано ниже.
 
 ## Описание проекта Foodgram
